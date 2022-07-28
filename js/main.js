@@ -19,12 +19,31 @@ function createMap(){
     //For MabBox Standard Basemaps
     var standardBasemap   = L.tileLayer(mbUrl, {id: 'mapbox.light', token: apitoken, attribution: mbAttr});
     
+    var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
+    
+    var CyclOSM = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+	maxZoom: 20,
+	attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+    
     //create the map*/
     var map = L.map('map', {
         center: [31.00, -5],//Coordinated to center the map
         zoom: 6, //zoom level
-        layers:customeBasemap //basemap
+        layers:OpenStreetMap_Mapnik //basemap
     });
+    
+//create the basemap control layer*/
+    var baseLayers = {
+		"Dark": customeBasemap,
+        "OSM": OpenStreetMap_Mapnik,
+        "CyclOSM": CyclOSM,
+		
+    };
+    
+    L.control.layers(baseLayers).addTo(map);
     
 };
 
